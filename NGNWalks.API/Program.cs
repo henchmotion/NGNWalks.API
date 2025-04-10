@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NGNWalks.API.Data;
+using NGNWalks.API.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,11 @@ builder.Services.AddSwaggerGen();
 
 //injecting the DbContext class
 builder.Services.AddDbContext<NGNWalksDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("NGNWalksConnectionString")));
+
+//Injecting the repository
+builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
+
 
 var app = builder.Build();
 
